@@ -7,7 +7,7 @@ pub use crate::dec::*;
 pub use crate::enc::*;
 
 /// Calculates the maximum overhead when encoding a message with the given length.
-/// This
+/// The overhead is a maximum of [n/254] bytes (one in 254 bytes) rounded up.
 pub const fn max_encoding_overhead(source_len: usize) -> usize {
     (source_len + 254 - 1) / 254
 }
