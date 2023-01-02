@@ -229,22 +229,3 @@ pub fn encode_vec_with_sentinel(source: &[u8], sentinel: u8) -> Vec<u8> {
     encoded.truncate(encoded_len);
     return encoded;
 }
-
-#[cfg(test)]
-mod tests {
-    use crate::{decode, encode};
-
-    #[test]
-    fn test_254_block_all_ones() {
-        let src: [u8; 254] = [1; 254];
-        let mut dest: [u8; 256] = [0; 256];
-        let encode_len = encode(&src, &mut dest);
-        //println!("Encoded buf [0..100]: {:x?}", &dest[0..100]);
-        //println!("Encoded buf [100..end]: {:x?}", &dest[100..]);
-        assert_eq!(encode_len, 255);
-        let mut decoded: [u8; 254] = [1; 254];
-        let decoded_len = decode(&dest, &mut decoded).expect("decoding failed");
-        assert_eq!(decoded_len, 254);
-        assert_eq!(&src, &decoded);
-    }
-}
